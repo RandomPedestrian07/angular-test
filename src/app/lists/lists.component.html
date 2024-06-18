@@ -1,23 +1,15 @@
-<div *ngIf="!topStoriesContent.length && !isSpecificId">
+<div *ngIf="!topStoriesContent.length">
     <h2>One moment please... (Remind me to add a loader later)</h2>
 </div>
-<div *ngIf="!isSpecificId">
-    <ul>
-        <li *ngFor="let stories of topStoriesContent"><strong>Title: {{stories.title}}</strong>
-            <ul>
-                <li>Author: {{stories.by}}</li>
-                <li>Score: {{stories.score}}</li>
-                <li>Link: <a [href]="'https://news.ycombinator.com/item?id=' + stories.id" target="_blank">https://news.ycombinator.com/item?id={{stories.id}}</a></li>
-            </ul>
-        </li>
-    </ul>
+<div>
+    <div>
+        <ag-grid-angular
+          style="width: 100%; height: 500px;"
+          class="ag-theme-quartz"
+          [rowData]="topStoriesContent"
+          [columnDefs]="columnDefs">
+        </ag-grid-angular>
+      </div>
 </div>
-<div *ngIf="isSpecificId && specificStoryContent.title">
-    <ul>
-        <li><strong>{{specificStoryContent?.title}}</strong></li>
-        <li>Score: {{specificStoryContent?.score}}</li>
-        <li>Author: {{specificStoryContent?.by}}</li>
-        <li>Link: <a [href]="'https://news.ycombinator.com/item?id=' + specificStoryContent?.id" target="_blank">https://news.ycombinator.com/item?id={{specificStoryContent?.id}}</a></li>
-    </ul>
-</div>
+
 

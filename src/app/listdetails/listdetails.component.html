@@ -1,0 +1,8 @@
+<div *ngIf="specificStoryContent.title">
+    <ul>
+        <li><strong>{{specificStoryContent?.title}}</strong></li>
+        <li>Score: {{specificStoryContent?.score}}</li>
+        <li>Author: {{specificStoryContent?.by}}</li>
+        <li>Link: <a [href]="'https://news.ycombinator.com/item?id=' + specificStoryContent?.id" target="_blank">https://news.ycombinator.com/item?id={{specificStoryContent?.id}}</a></li>
+    </ul>
+</div>
