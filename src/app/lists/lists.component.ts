@@ -20,7 +20,7 @@ export class ListsComponent implements OnInit {
 
   topStoriesArray: number[] = [];
   topStoriesContent: any[] = [];
-  cacheDuration = 90000;
+  cacheDuration = 900000;
   header: String = '';
   isLoading = false;
 
