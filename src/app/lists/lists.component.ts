@@ -20,7 +20,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ListsComponent implements OnInit {
 
   topStoriesContent: any[] = [];
-  apiServerUrl = 'http://localhost:3002';
+  apiServerUrl = 'http://18.219.73.234:3000';
   listToLoad = '';
 
   columnDefs: ColDef[] = [
@@ -56,16 +56,16 @@ export class ListsComponent implements OnInit {
   private getStories(): Observable<any[]> {
     switch (this.listToLoad) {
       default:
-        return this.http.get<any[]>('http://localhost:3002/topstories');
+        return this.http.get<any[]>(`${this.apiServerUrl}/topstories`);
         break;
       case 'topstories':
-        return this.http.get<any[]>('http://localhost:3002/topstories');
+        return this.http.get<any[]>(`${this.apiServerUrl}/topstories`);
         break;
       case 'beststories':
-        return this.http.get<any[]>('http://localhost:3002/beststories');
+        return this.http.get<any[]>(`${this.apiServerUrl}/beststories`);
         break;
       case 'newstories':
-        return this.http.get<any[]>('http://localhost:3002/newstories');
+        return this.http.get<any[]>(`${this.apiServerUrl}/newstories`);
         break;
     }
   }
