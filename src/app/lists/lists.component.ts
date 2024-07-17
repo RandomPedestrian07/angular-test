@@ -5,6 +5,7 @@ import { Observable, from, mergeMap, switchMap, tap, toArray } from 'rxjs';
 import { AgGridAngular, AngularFrameworkComponentWrapper, AngularFrameworkOverrides } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community'; 
 import { SpinnerComponent } from '../spinner/spinner.component';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -18,11 +19,9 @@ import { SpinnerComponent } from '../spinner/spinner.component';
   
 export class ListsComponent implements OnInit {
 
-  topStoriesArray: number[] = [];
   topStoriesContent: any[] = [];
-  cacheDuration = 900000;
-  header: String = '';
-  isLoading = false;
+  apiServerUrl = 'http://localhost:3002';
+  listToLoad = '';
 
   columnDefs: ColDef[] = [
     { field: 'title', headerName: 'Title', minWidth: 700 },
@@ -38,53 +37,36 @@ export class ListsComponent implements OnInit {
     }
   ];
 
-   constructor(private http: HttpClient) { }
+   constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    const cachedData = localStorage.getItem('topStoriesCache');
-    if (cachedData) {
-      const { data, timestamp } = JSON.parse(cachedData);
-      const cacheAge = Date.now() - timestamp;
-      if (cacheAge < this.cacheDuration) {
-        const cacheLeft: number = (this.cacheDuration - cacheAge) / 1000 / 60;
-        this.header = 'Using cached data, about ' + Math.round(cacheLeft) + ' minutes left before cache is refreshed';
-        this.topStoriesContent = data;
-      } else {
-        this.header = "Cache is expired, fetching updated data";
-        this.getTopStoriesArray();
-      }
-    } else {
-      this.header = "No cache found, fetching data";
-      this.getTopStoriesArray();
-    }
-  }
-
-  private getTopStoriesArray(): void {
-    this.isLoading = true;
-    this.http.get<number[]>('https://hacker-news.firebaseio.com/v0/topstories.json').pipe(
-      switchMap(stories =>
-        from(stories).pipe(
-          mergeMap(id => this.getStory(id)),
-          toArray()
-        )
-      ),
-      tap(storiesDetails => {
-        const cacheData = { data: storiesDetails, timestamp: Date.now() };
-        localStorage.setItem('topStoriesCache', JSON.stringify(cacheData));
-        console.log('Cached new data:', cacheData);
-        this.topStoriesContent = storiesDetails;
-        this.header = 'New data has been loaded';
-        this.isLoading = false;
-      })
-    ).subscribe({
+    this.route.params.subscribe(params => {
+      this.listToLoad = params['listtype'];
+    });
+    this.getStories().subscribe({
+      next: (results) => {
+        this.topStoriesContent = results;
+      },
       error: (err) => {
         console.error('Error:', err);
-        this.isLoading = false;
       }
     });
   }
 
-  private getStory(id: number): Observable<any> {
-    return this.http.get<any>(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
+  private getStories(): Observable<any[]> {
+    switch (this.listToLoad) {
+      default:
+        return this.http.get<any[]>('http://localhost:3002/topstories');
+        break;
+      case 'topstories':
+        return this.http.get<any[]>('http://localhost:3002/topstories');
+        break;
+      case 'beststories':
+        return this.http.get<any[]>('http://localhost:3002/beststories');
+        break;
+      case 'newstories':
+        return this.http.get<any[]>('http://localhost:3002/newstories');
+        break;
+    }
   }
 }
