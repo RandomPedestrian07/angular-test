@@ -57,16 +57,13 @@ export class ListsComponent implements OnInit {
     switch (this.listToLoad) {
       default:
         return this.http.get<any[]>(`${this.apiServerUrl}/topstories`);
-        break;
       case 'topstories':
         return this.http.get<any[]>(`${this.apiServerUrl}/topstories`);
-        break;
       case 'beststories':
         return this.http.get<any[]>(`${this.apiServerUrl}/beststories`);
-        break;
       case 'newstories':
         return this.http.get<any[]>(`${this.apiServerUrl}/newstories`);
-        break;
+
     }
   }
 }
