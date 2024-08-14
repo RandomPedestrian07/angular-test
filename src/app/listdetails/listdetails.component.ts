@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
   selector: 'app-listdetails',
   standalone: true,
   providers: [AgGridAngular, AngularFrameworkOverrides, AngularFrameworkComponentWrapper],
-  imports: [HttpClientModule, CommonModule, NgFor, AgGridAngular],
+  imports: [CommonModule, NgFor, AgGridAngular],
   templateUrl: './listdetails.component.html',
   styleUrl: './listdetails.component.css'
 })

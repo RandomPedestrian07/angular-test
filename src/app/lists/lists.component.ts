@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { Observable, from, mergeMap, switchMap, tap, toArray } from 'rxjs';
@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'app-lists',
   standalone: true,
   providers: [AgGridAngular, AngularFrameworkOverrides, AngularFrameworkComponentWrapper],
-  imports: [HttpClientModule, CommonModule, NgFor, AgGridAngular, SpinnerComponent],
+  imports: [ CommonModule, NgFor, AgGridAngular, SpinnerComponent],
   templateUrl: './lists.component.html',
   styleUrl: './lists.component.css' 
   })
