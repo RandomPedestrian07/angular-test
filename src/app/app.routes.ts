@@ -3,6 +3,7 @@ import { AboutMeComponent } from './about-me/about-me.component';
 import { ListsComponent } from './lists/lists.component';
 import { HomeComponent } from './home/home.component';
 import { ListdetailsComponent } from './listdetails/listdetails.component';
+import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -10,5 +11,6 @@ export const routes: Routes = [
     {path: 'about-me', component: AboutMeComponent},
     {path: 'lists', component: ListsComponent},
     {path: 'lists/:listtype', component: ListsComponent},
+    {path: 'login', component: LoginComponent},
     {path: 'lists/:id', component: ListdetailsComponent}
 ];

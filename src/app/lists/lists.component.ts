@@ -20,7 +20,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ListsComponent implements OnInit {
 
   topStoriesContent: any[] = [];
-  apiServerUrl = 'http://18.219.73.234:3000';
+  apiServerUrl = 'http://localhost:3000';
   listToLoad = '';
 
   columnDefs: ColDef[] = [
